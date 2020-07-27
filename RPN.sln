@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPN", "RPN.csproj", "{0902881D-3F81-42CE-AC1A-B4E1EA7F74C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|anycpu = Debug|anycpu
+		Release|anycpu = Release|anycpu
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0902881D-3F81-42CE-AC1A-B4E1EA7F74C0}.Debug|anycpu.ActiveCfg = Debug|anycpu
+		{0902881D-3F81-42CE-AC1A-B4E1EA7F74C0}.Debug|anycpu.Build.0 = Debug|anycpu
+		{0902881D-3F81-42CE-AC1A-B4E1EA7F74C0}.Release|anycpu.ActiveCfg = Release|anycpu
+		{0902881D-3F81-42CE-AC1A-B4E1EA7F74C0}.Release|anycpu.Build.0 = Release|anycpu
+	EndGlobalSection
+EndGlobal
