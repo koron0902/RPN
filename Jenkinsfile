@@ -4,8 +4,7 @@ pipeline {
    stages {
       stage('Hello') {
          steps {
-            echo 'Hello World'
-            echo 'Jenkins Integ Test....'
+					 sh 'dotnet test'
          }
       }
    }
