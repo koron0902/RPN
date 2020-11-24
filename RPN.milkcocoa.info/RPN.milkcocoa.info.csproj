@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.1;net45;net472</TargetFrameworks>
+		<PackOnBuild>true</PackOnBuild>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DebugType>
+		</DebugType>
+		<DocumentationFile>bin\Release\netstandard2.1\RPN.milkcocoa.info.xml</DocumentationFile>
+	</PropertyGroup>
+</Project>

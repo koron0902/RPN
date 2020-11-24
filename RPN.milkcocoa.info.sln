@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPN.milkcocoa.info", "RPN.milkcocoa.info\RPN.milkcocoa.info.csproj", "{633A8148-0CF9-4F16-B8C1-B383F9A8BF85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPN.milkcocoa.info.test", "RPN.milkcocoa.info.test\RPN.milkcocoa.info.test.csproj", "{DAE8A5B2-13C1-4334-A27B-55162691A91F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{633A8148-0CF9-4F16-B8C1-B383F9A8BF85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{633A8148-0CF9-4F16-B8C1-B383F9A8BF85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{633A8148-0CF9-4F16-B8C1-B383F9A8BF85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{633A8148-0CF9-4F16-B8C1-B383F9A8BF85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAE8A5B2-13C1-4334-A27B-55162691A91F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAE8A5B2-13C1-4334-A27B-55162691A91F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAE8A5B2-13C1-4334-A27B-55162691A91F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAE8A5B2-13C1-4334-A27B-55162691A91F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
