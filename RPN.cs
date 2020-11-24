@@ -6,7 +6,8 @@ namespace FlickCalc {
   public class Token {
     public enum Kind {
       Number,
-      Operator
+      Operator,
+      Function
     }
 
     public int priority_;
@@ -15,35 +16,43 @@ namespace FlickCalc {
   }
 
   public class RPN {
-    Regex regex_;
+    Regex op_;
+    Regex cos_;
+    Regex sin_;
     /// summary   : コンストラクタ
     public RPN() {
-      regex_ = new Regex(@"([+\-*/=()])");
+      op_ = new Regex(@"([+\-×÷=()])");
+      sin_ = new Regex(@"(~?[0-9]+\.?[0-9]+?)sin");
+      cos_ = new Regex(@"(~?[0-9]+\.?[0-9]+?)cos");
     }
 
 
     private IEnumerable<Token> Tokenize(string _formula) {
       var tokenized = new List<Token>();
-      var token = Regex.Split(_formula, regex_.ToString());
 
+      _formula = _formula.Replace("(-", "(~");
+      var token = Regex.Split(_formula, op_.ToString());
       foreach(var t in token) {
         if(t.Equals("")) {
           continue;
-        }
-        if(Regex.IsMatch(t, regex_.ToString())) {
+        } else if(Regex.IsMatch(t, op_.ToString())) {
           var priority = 0;
+
           if(t.Equals("(") | t.Equals(")")) {
             priority = 4;
-          } else if(t.Equals("/")) {
+          } else if(t.Equals("÷")) {
             priority = 3;
-          } else if(t.Equals("*")) {
+          } else if(t.Equals("×")) {
             priority = 2;
           } else {
             priority = 1;
           }
           tokenized.Add(new Token() { kind_ = Token.Kind.Operator, value_ = t, priority_ = priority });
+        } else if(Regex.IsMatch(t, cos_.ToString()) |
+                  Regex.IsMatch(t, sin_.ToString())) {
+          tokenized.Add(new Token() { kind_ = Token.Kind.Function, value_ = t.Replace("~", "-"), priority_ = 5 });
         } else {
-          tokenized.Add(new Token() { kind_ = Token.Kind.Number, value_ = t, priority_ = 0 });
+          tokenized.Add(new Token() { kind_ = Token.Kind.Number, value_ = t.Replace("~", "-"), priority_ = 0 });
         }
       }
       return tokenized;
@@ -85,29 +94,61 @@ namespace FlickCalc {
     }
 
     private String Calc(IEnumerable<Token> _token) {
-      var stack = new List<double>();
+      var stack = new Stack<double>();
+
+
       foreach(var t in _token) {
         if(t.kind_ == Token.Kind.Number) {
-          stack.Add(double.Parse(t.value_));
+          stack.Push(double.Parse(t.value_));
+        } else if(t.kind_ == Token.Kind.Function) {
+          if(Regex.IsMatch(t.value_, cos_.ToString())) {
+            var arg = stack.Pop();
+            double amp;
+            if(!double.TryParse(Regex.Match(t.value_, cos_.ToString()).Value, out amp)) {
+              // 係数がない場合は1倍として扱う
+              amp = 1;
+            }
+            stack.Push(amp * Math.Cos(arg));
+          } else if(Regex.IsMatch(t.value_, sin_.ToString())) {
+            var arg = stack.Pop();
+            double amp;
+            if(!double.TryParse(Regex.Match(t.value_, sin_.ToString()).Value, out amp)) {
+              // 係数がない場合は1倍として扱う
+              amp = 1;
+            }
+            stack.Push(amp * Math.Sin(arg));
+          } else {
+            throw new Exception("この計算はできません．");
+          }
         } else {
-          var rhs = stack.Last();
-          stack.RemoveAt(stack.Count() - 1);
-          var lhs = stack.Last();
-          stack.RemoveAt(stack.Count() - 1);
+          var lhs = 0.0;
+          var rhs = 0.0;
+          if(stack.Count() >= 2) {
+            rhs = stack.Pop();
+            lhs = stack.Pop();
+          } else {
+            throw new Exception("この計算はできません．");
+          }
+
 
           if(t.value_.Equals("+")) {
-            stack.Add(lhs + rhs);
+            stack.Push(lhs + rhs);
           } else if(t.value_.Equals("-")) {
-            stack.Add(lhs - rhs);
-          } else if(t.value_.Equals("*")) {
-            stack.Add(lhs * rhs);
-          } else if(t.value_.Equals("/")) {
-            stack.Add(lhs / rhs);
+            stack.Push(lhs - rhs);
+          } else if(t.value_.Equals("×")) {
+            stack.Push(lhs * rhs);
+          } else if(t.value_.Equals("÷")) {
+            if(rhs == 0) {
+              throw new Exception("この計算はできません．");
+            }
+            stack.Push(lhs / rhs);
+          } else {
+            throw new Exception("この計算はできません．");
           }
         }
       }
 
-      return stack.Last().ToString();
+      return stack.Last().ToString("#############0.##############");
     }
 
 
