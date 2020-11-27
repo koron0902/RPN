@@ -23,17 +23,20 @@ pipeline {
         branch 'master'
       }
       steps{
-        def VersionCode="2020.11.25"
-        def ProjectName="RPN.milkcocoa.info"
-        sh """
+				script{
+
+        	def VersionCode = (new Date()).format("yyyy.MM.dd")
+        	def ProjectName = "RPN.milkcocoa.info"
+        	sh """
 cd ${ProjectName}
 nuget spec
 dotnet pack --configuration Release -p:PackageVersion=${VersionCode}
 """
 //dotnet nuget push bin/Release/${ProjectName}.${VersionCode}.nupkg --api-key ${CREDENTIALS} --source https://api.nuget.org/v3/index.json
 //"""
-      }
-    }
+	      }
+  	  }
+		}
 
 		stage('upload artifact'){
 			steps{
