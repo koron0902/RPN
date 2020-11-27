@@ -23,8 +23,8 @@ pipeline {
         branch 'master'
       }
       steps{
-        VersionCode="2020.11.25"
-        ProjectName="RPN.milkcocoa.info"
+        def VersionCode="2020.11.25"
+        def ProjectName="RPN.milkcocoa.info"
         sh """
 cd ${ProjectName}
 nuget spec
