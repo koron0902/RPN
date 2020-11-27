@@ -6,6 +6,11 @@ pipeline {
   }
 
   stages {
+		stage('clean up'){
+			steps{
+				cleanWs()
+			}
+		}
     stage('build') {
       steps {
         sh 'dotnet build --configuration Release'
