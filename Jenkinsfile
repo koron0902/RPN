@@ -19,7 +19,8 @@ environment{
         sh 'dotnet test --configuration Release'
       }
     }
-		stege('genearte package'){
+
+		stage('genearte package'){
 			steps{
 				dir(ProjectName){
         	sh 'nuget spec'
@@ -44,6 +45,7 @@ environment{
 				archiveArtifacts allowEmptyArchive: true, artifacts: '**/*.nupkg', fingerprint: true, onlyIfSuccessful: true
 			}
 		}
+
 		stage('clean up'){
 			steps{
 				cleanWs()
