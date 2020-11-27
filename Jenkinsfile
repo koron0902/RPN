@@ -42,4 +42,3 @@ dotnet pack --configuration Release -p:PackageVersion=${VersionCode}
 		}
   }
 }
-}
