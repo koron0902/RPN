@@ -1,7 +1,9 @@
 pipeline {
   agent any
 
-  environment {
+environment{
+		VersionCode = (new Date()).format("yyyy.MM.dd")
+		ProjectName = "RPN.milkcocoa.info"
     CREDENTIALS = credentials("NuGet-API-Key")
   }
 
@@ -17,23 +19,22 @@ pipeline {
         sh 'dotnet test --configuration Release'
       }
     }
+		stege('genearte package'){
+			steps{
+				dir(ProjectName){
+        	sh 'nuget spec'
+					sh "dotnet pack --configuration Release -p:PackageVersion=${VersionCode}"
+				}
+			}
+		}
 
     stage('deploy'){
       when {
         branch 'master'
       }
       steps{
-				script{
-
-        	def VersionCode = (new Date()).format("yyyy.MM.dd")
-        	def ProjectName = "RPN.milkcocoa.info"
-        	sh """
-cd ${ProjectName}
-nuget spec
-dotnet pack --configuration Release -p:PackageVersion=${VersionCode}
-"""
-//dotnet nuget push bin/Release/${ProjectName}.${VersionCode}.nupkg --api-key ${CREDENTIALS} --source https://api.nuget.org/v3/index.json
-//"""
+				dir(ProjectName){
+					sh "dotnet nuget push bin/Release/${ProjectName}.${VersionCode}.nupkg --api-key ${CREDENTIALS} --source https://api.nuget.org/v3/index.json"
 	      }
   	  }
 		}
