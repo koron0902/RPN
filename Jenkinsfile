@@ -6,11 +6,6 @@ pipeline {
   }
 
   stages {
-		stage('clean up'){
-			steps{
-				cleanWs()
-			}
-		}
     stage('build') {
       steps {
         sh 'dotnet build --configuration Release'
@@ -46,6 +41,11 @@ dotnet pack --configuration Release -p:PackageVersion=${VersionCode}
 		stage('upload artifact'){
 			steps{
 				archiveArtifacts allowEmptyArchive: true, artifacts: '**/*.nupkg', fingerprint: true, onlyIfSuccessful: true
+			}
+		}
+		stage('clean up'){
+			steps{
+				cleanWs()
 			}
 		}
   }
